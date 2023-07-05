@@ -5340,6 +5340,9 @@ endif
 ifeq ($(BOARD_USES_PVMFWIMAGE),true)
 	$(hide) echo "flash pvmfw" >> $@
 endif
+ifneq ($(INSTALLED_VENDOR_BOOTIMAGE_TARGET),)
+	$(hide) echo "flash vendor_boot" >> $@
+endif
 ifeq ($(BOARD_AVB_ENABLE),true)
 ifeq ($(BUILDING_VBMETA_IMAGE),true)
 	$(hide) echo "flash --apply-vbmeta vbmeta" >> $@
@@ -5349,9 +5352,6 @@ ifneq (,$(strip $(BOARD_AVB_VBMETA_SYSTEM)))
 endif
 ifneq (,$(strip $(BOARD_AVB_VBMETA_VENDOR)))
 	$(hide) echo "flash --apply-vbmeta vbmeta_vendor" >> $@
-endif
-ifneq ($(INSTALLED_VENDOR_BOOTIMAGE_TARGET),)
-	$(hide) echo "flash vendor_boot" >> $@
 endif
 ifneq (,$(strip $(BOARD_AVB_VBMETA_CUSTOM_PARTITIONS)))
 	$(hide) $(foreach partition,$(BOARD_AVB_VBMETA_CUSTOM_PARTITIONS), \
